@@ -1,42 +1,49 @@
 // app/cart/page.tsx
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { getCart, placeOrder } from '@/lib/api'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import Image from 'next/image'
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { getCart, placeOrder } from "@/lib/api";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import Image from "next/image";
 
 export default function Cart() {
-  const [cart, setCart] = useState<any>(null)
-  const [error, setError] = useState('')
-  const router = useRouter()
+  const [cart, setCart] = useState<any>(null);
+  const [error, setError] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const data = await getCart()
-        setCart(data)
+        const data = await getCart();
+        console.log(data); // Log to check the full structure
+        setCart(data);
       } catch (err) {
-        setError('Failed to fetch cart')
+        setError("Failed to fetch cart");
       }
-    }
-    fetchCart()
-  }, [])
+    };
+    fetchCart();
+  }, []);
 
   const handlePlaceOrder = async () => {
     try {
-      await placeOrder()
-      router.push('/checkout')
+      await placeOrder();
+      router.push("/checkout");
     } catch (err) {
-      setError('Failed to place order')
+      setError("Failed to place order");
     }
-  }
+  };
 
   if (!cart) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
@@ -54,15 +61,26 @@ export default function Cart() {
           {cart.data.map((item: any) => (
             <Card key={item.id} className="mb-4">
               <CardHeader className="flex flex-row space-x-4">
-                <Image src={item.image_url} alt={item.name} width={100} height={100} className="w-24 h-24 object-cover" />
+                {item.product_info?.image_url && (
+                  <Image
+                    src={item.product_info.image_url}
+                    alt={item.product_info.name}
+                    width={100}
+                    height={100}
+                    className="w-24 h-24 object-cover"
+                  />
+                )}
                 <div>
-                  <CardTitle>{item.name}</CardTitle>
-                  <p className="text-gray-600">{item.description}</p>
+                  <CardTitle>{item.product_info?.name}</CardTitle>
+                  <p className="text-gray-600">
+                    {item.product_info?.description ||
+                      "No description available"}
+                  </p>
                 </div>
               </CardHeader>
               <CardContent>
-                <p>Price: ${item.price.toFixed(2)}</p>
-                <p>Total: ${item.total_price.toFixed(2)}</p>
+                <p>Price: ${item.price?.toFixed(2) || "N/A"}</p>
+                <p>Total: ${item.total_price?.toFixed(2) || "N/A"}</p>
               </CardContent>
             </Card>
           ))}
@@ -73,5 +91,5 @@ export default function Cart() {
         </>
       )}
     </div>
-  )
+  );
 }

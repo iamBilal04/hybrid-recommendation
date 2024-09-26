@@ -15,9 +15,17 @@ interface Product {
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [activity, setActivity] = useState<number[]>([]);
+  const [activity, setActivity] = useState<string[]>([]);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Load activity from local storage
+    const storedActivity = localStorage.getItem('activity');
+    if (storedActivity) {
+      setActivity(JSON.parse(storedActivity));
+    }
+  }, []);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -29,7 +37,6 @@ export default function Products() {
         if (response && Array.isArray(response.data)) {
           setProducts(response.data);
         } else if (response && typeof response === 'object' && Object.keys(response).length > 0) {
-          // If response is an object, try to extract products
           const extractedProducts = Object.values(response).flat().filter(item => typeof item === 'object' && item.id);
           if (extractedProducts.length > 0) {
             setProducts(extractedProducts as Product[]);
@@ -47,13 +54,22 @@ export default function Products() {
       }
     };
 
-    fetchProducts();
+    // Only fetch products if activity has items
+    if (activity.length > 0) {
+      const debounceTimeout = setTimeout(() => {
+        fetchProducts();
+      }, 500); // Debounce delay in milliseconds
+
+      return () => clearTimeout(debounceTimeout); // Cleanup on component unmount or on new activity change
+    }
   }, [activity]);
 
   const handleAddToCart = async (productId: number) => {
     try {
       await addToCart(productId);
-      setActivity(prev => [productId, ...prev.slice(0, 4)]);
+      const updatedActivity = [productId.toString(), ...activity.slice(0, 4)];
+      setActivity(updatedActivity);
+      localStorage.setItem('activity', JSON.stringify(updatedActivity)); // Store activity in local storage
     } catch (err) {
       console.error('Error adding to cart:', err);
       setError('Failed to add product to cart. Please try again.');
