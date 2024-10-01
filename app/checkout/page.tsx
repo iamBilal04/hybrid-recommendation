@@ -34,7 +34,7 @@ export default function Checkout() {
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
-      <h2 className="text-2xl font-bold mb-4">Recommended Products</h2>
+      <h2 className="text-2xl font-bold mb-4">Frequently bought together</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {recommendations.map((product: any) => (
           <Card key={product.id}>

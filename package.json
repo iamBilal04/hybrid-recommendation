@@ -14,17 +14,22 @@
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "framer-motion": "^11.9.0",
     "lucide-react": "^0.445.0",
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
+    "react-intersection-observer": "^9.13.1",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "three": "^0.169.0",
+    "vanta": "^0.5.24"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/three": "^0.169.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.13",
     "postcss": "^8",

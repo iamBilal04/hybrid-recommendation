@@ -1,4 +1,3 @@
-// app/products/[id]/page.tsx
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -46,7 +45,7 @@ export default function ProductDetail() {
     <div>
       <Card className="mb-8">
         <CardHeader>
-          <Image src={product.image_url} alt={product.name} width={400} height={300} className="w-full h-64 object-cover" />
+          <Image src={product.image_url} alt={product.name} width={200} height={100} className="w-full h-64 object-cover" />
         </CardHeader>
         <CardContent>
           <CardTitle>{product.name}</CardTitle>
