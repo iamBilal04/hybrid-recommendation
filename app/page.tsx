@@ -1,21 +1,27 @@
-"use client"
+"use client";
 
-import React, { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { ShoppingBag, Zap, Shield, Gift } from 'lucide-react'
-import ACERTENITY from 'vanta/dist/vanta.net.min'
-import * as THREE from 'three'
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ShoppingBag, Zap, Shield, Gift } from "lucide-react";
 
-const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => {
+const FeatureCard = ({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
-  })
+  });
 
   return (
     <motion.div
@@ -34,50 +40,20 @@ const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, titl
         </CardContent>
       </Card>
     </motion.div>
-  )
-}
+  );
+};
 
 export default function Home() {
-  const [vantaEffect, setVantaEffect] = useState<any>(null)
-  const vantaRef = useRef(null)
-
-  useEffect(() => {
-    if (!vantaEffect) {
-      setVantaEffect(
-        ACERTENITY({
-          el: vantaRef.current,
-          THREE: THREE,
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.00,
-          minWidth: 200.00,
-          scale: 1.00,
-          scaleMobile: 1.00,
-          color: 0x3b82f6,
-          backgroundColor: 0x0,
-          points: 10.00,
-          maxDistance: 25.00,
-          spacing: 20.00
-        })
-      )
-    }
-    return () => {
-      if (vantaEffect) vantaEffect.destroy()
-    }
-  }, [vantaEffect])
-
   return (
     <div className="min-h-screen">
-      {/* Hero Section with Vanta.js Acertenity background */}
-      <section ref={vantaRef} className="relative h-[80vh] flex items-center justify-center overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative h-[80vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-blue-500 to-blue-800">
         <div className="relative z-10 text-center text-white">
           <motion.h1
-            className="text-5xl font-extrabold mb-4 text-white"
+            className="text-5xl font-extrabold mb-4"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-
           >
             Welcome to Our Hybrid Shop
           </motion.h1>
@@ -95,7 +71,10 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <Link href="/products">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+              >
                 Shop Now
               </Button>
             </Link>
@@ -106,7 +85,9 @@ export default function Home() {
       {/* Features Section */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Why Choose Us
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <FeatureCard
               icon={<ShoppingBag className="h-6 w-6" />}
@@ -135,7 +116,9 @@ export default function Home() {
       {/* Featured Products Section */}
       <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Featured Products</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Featured Products
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
               <motion.div
@@ -153,7 +136,9 @@ export default function Home() {
                     className="w-full h-48 object-cover"
                   />
                   <CardContent className="p-4">
-                    <h3 className="text-lg font-semibold mb-2">Featured Product {i}</h3>
+                    <h3 className="text-lg font-semibold mb-2">
+                      Featured Product {i}
+                    </h3>
                     <p className="text-sm text-muted-foreground mb-4">
                       This is a brief description of the featured product.
                     </p>
@@ -201,5 +186,5 @@ export default function Home() {
         </div>
       </section>
     </div>
-  )
+  );
 }

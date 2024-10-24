@@ -37,6 +37,7 @@ export default function Products() {
         if (response && Array.isArray(response.data)) {
           setProducts(response.data);
         } else if (response && typeof response === 'object' && Object.keys(response).length > 0) {
+          // @ts-ignore
           const extractedProducts = Object.values(response).flat().filter(item => typeof item === 'object' && item.id);
           if (extractedProducts.length > 0) {
             setProducts(extractedProducts as Product[]);

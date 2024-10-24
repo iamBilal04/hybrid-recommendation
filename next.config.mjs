@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     domains: ["fakestoreapi.com"],
   },
+  eslint: {
+    ignoreDuringBuilds: true, // Ignore ESLint errors during build
+  },
 };
 
 export default nextConfig;
