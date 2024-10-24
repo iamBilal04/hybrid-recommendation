@@ -1,7 +1,7 @@
 // lib/api.ts
 import axios from "axios";
 
-const API_URL = "https://5b41-43-231-238-206.ngrok-free.app";
+const API_URL = "https://f372-43-231-238-206.ngrok-free.app/";
 
 const api = axios.create({
   baseURL: API_URL,
@@ -9,6 +9,8 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+//alalal
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
